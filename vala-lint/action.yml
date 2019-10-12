@@ -1,0 +1,18 @@
+name: 'Vala Lint'
+description: 'Lint vala code using vala-lint'
+inputs:
+  dir:
+    description: 'Source code directory'
+    required: true
+    default: '.'
+  conf:
+    description: 'Configuration file'
+    requried: true
+    default: '/dev/null'
+runs:
+  using: 'docker'
+  image: 'docker://valalang/lint:latest'
+  args:
+    - -c
+    - ${{ inputs.conf }}
+    - ${{ inputs.dir }}
