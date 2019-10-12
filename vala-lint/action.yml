@@ -3,17 +3,21 @@ description: 'Lint vala code using vala-lint'
 inputs:
   dir:
     description: 'Source code directory'
-    required: true
-    default: '.'
+    required: false
   conf:
     description: 'Configuration file'
-    requried: true
-    default: '/dev/null'
+    required: false
+  fail:
+    description: 'Whether to fail the build if the linter detects any errors'
+    required: false
+    default: true
 runs:
   using: 'docker'
-  image: 'docker://valalang/lint:latest'
+  image: 'Dockerfile'
   args:
-    - io.elementary.vala-lint
-    - -c
-    - ${{ inputs.conf }}
     - ${{ inputs.dir }}
+    - ${{ inputs.conf }}
+    - ${{ inputs.fail }}
+branding:
+  icon: 'check-square'
+  color: 'purple'
