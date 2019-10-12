@@ -13,6 +13,7 @@ runs:
   using: 'docker'
   image: 'docker://valalang/lint:latest'
   args:
+    - io.elementary.vala-lint
     - -c
     - ${{ inputs.conf }}
     - ${{ inputs.dir }}
