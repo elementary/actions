@@ -4,6 +4,7 @@ inputs:
   dir:
     description: 'Source code directory'
     required: false
+    default: '.'
   conf:
     description: 'Configuration file'
     required: false
