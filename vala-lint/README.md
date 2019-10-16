@@ -19,15 +19,29 @@ Whether to fail the build on errors. Default `true`.
 ## Simple Example
 
 ```yaml
-uses: elementary/actions/vala-lint@master
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: elementary/actions/vala-lint@master
 ```
 
 ## Full Example
 
 ```yaml
-uses: elementary/actions/vala-lint@master
-with:
-  dir: src/
-  conf: .vala-lint.conf
-  fail: false
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: elementary/actions/vala-lint@master
+      with:
+        dir: src/
+        conf: .vala-lint.conf
+        fail: false
 ```
