@@ -2,15 +2,10 @@
 set -e
 
 if [ "$1" != "--dry-run" ]; then
-  # Git Credential Setup
   echo "Setting up git credentials..."
-  git config --global user.email "$GIT_EMAIL"
-  git config --global user.name "$GIT_USER"
-  mkdir -p ~/.ssh
-  echo -e "Host github.com\\n\\tStrictHostKeyChecking no\\n\\tLogLevel ERROR\\n" >> ~/.ssh/config
-  echo -e "$GIT_KEY" > ~/.ssh/id_rsa
-  chmod 0400 ~/.ssh/id_rsa
-  git remote set-url origin git@github.com:"$GITHUB_REPOSITORY"
+  git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
+  git config --global user.email "action@github.com"
+  git config --global user.name "GitHub Action"
   echo "Git credentials configured."
 fi
 

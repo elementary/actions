@@ -17,9 +17,6 @@ In order to create tags and push changes to various branches, the script needs a
 | Environment Variable | Example Value                  |
 | :------------------- | :------------------------------|
 | GITHUB_TOKEN         | `abcd1234thisisanexampletoken` |
-| GIT_USER             | `exampleuser`                  |
-| GIT_EMAIL            | `example@somewhere.io`         |
-| GIT_KEY              | Contents of an id_rsa key.     |
 
 Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
 
@@ -31,10 +28,8 @@ To test out the workflow and view information on what a project's changelog diff
 
 ```yaml
 jobs:
-  lint:
-
+  release:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - uses: elementary/actions/vala-lint@master
@@ -42,25 +37,17 @@ jobs:
         dryrun: '--dry-run'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GIT_USER: "${{ secrets.GIT_USER }}"
-        GIT_EMAIL: "${{ secrets.GIT_EMAIL }}"
-        GIT_KEY: "${{ secrets.GIT_KEY }}"
 ```
 
 ## Full Example
 
 ```yaml
 jobs:
-  lint:
-
+  release:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - uses: elementary/actions/vala-lint@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GIT_USER: "${{ secrets.GIT_USER }}"
-        GIT_EMAIL: "${{ secrets.GIT_EMAIL }}"
-        GIT_KEY: "${{ secrets.GIT_KEY }}"
 ```
