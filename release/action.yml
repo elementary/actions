@@ -10,9 +10,6 @@ runs:
   image: 'Dockerfile'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GIT_USER: "${{ secrets.GIT_USER }}"
-  GIT_EMAIL: "${{ secrets.GIT_EMAIL }}"
-  GIT_KEY: "${{ secrets.GIT_KEY }}"
 branding:
   icon: 'git-pull-request'
   color: 'green'
