@@ -15,7 +15,7 @@ fi
 
 # Checkout the branch that was merged into (eg. master).
 if [ -n "$GITHUB_REF" ]; then
-  BRANCH="$GITHUB_REF"
+  BRANCH="$(basename"$GITHUB_REF")"
 else
   BRANCH="master"
 fi

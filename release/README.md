@@ -31,7 +31,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - uses: elementary/actions/vala-lint@master
       with:
         dryrun: '--dry-run'
@@ -46,7 +46,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - uses: elementary/actions/vala-lint@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
