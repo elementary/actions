@@ -12,13 +12,7 @@ This image is intended for use with elementary debian projects. There are a few 
 
 ### Environment Variables
 
-In order to create tags and push changes to various branches, the script needs a few environment variables set:
-
-| Environment Variable | Example Value                  |
-| :------------------- | :------------------------------|
-| GITHUB_TOKEN         | `abcd1234thisisanexampletoken` |
-
-Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
+In order to create tags and push changes to various branches, the script needs a github token. Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
 
 ### Dry Run
 
@@ -32,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: elementary/actions/vala-lint@master
+    - uses: elementary/actions/release@master
       with:
         dryrun: '--dry-run'
       env:
@@ -47,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: elementary/actions/vala-lint@master
+    - uses: elementary/actions/release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
