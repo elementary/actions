@@ -3,7 +3,7 @@ set -e
 
 if [ "$1" != "--dry-run" ]; then
   echo "Setting up git credentials..."
-  git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
+  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
   git config --global user.email "action@github.com"
   git config --global user.name "GitHub Action"
   echo "Git credentials configured."
