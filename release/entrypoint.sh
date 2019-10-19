@@ -1,15 +1,19 @@
 #!/bin/bash
 set -e
 
-if [ "$1" != "--dry-run" ]; then
-  # make sure branches are up-to-date
-  git fetch
-  echo "Setting up git credentials..."
-  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
-  git config --global user.email "action@github.com"
-  git config --global user.name "GitHub Action"
-  echo "Git credentials configured."
+if [ -z "$1" ]; then
+  RELEASE_BRANCH="stable"
+else
+  RELEASE_BRANCH="$1"
 fi
+
+# make sure branches are up-to-date
+git fetch
+echo "Setting up git credentials..."
+git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
+git config --global user.email "action@github.com"
+git config --global user.name "GitHub Action"
+echo "Git credentials configured."
 
 # Check if this is a release branch that was merged in
 if ! git log --oneline -1 | grep -F "[release]" >/dev/null; then
@@ -57,15 +61,11 @@ DATA="
 }
 "
 
-if [ "$1" != "--dry-run" ]; then
-  # push the release content to github!
-  if ! curl --data "$DATA" https://api.github.com/repos/"$GITHUB_REPOSITORY"/releases?access_token="$GITHUB_TOKEN"; then
-    echo "\033[0;31mERROR: Unable to post github release tag information!\033[0m"  && exit 1
-  fi
-  echo -e "\n\033[1;32mA new github release tag has been created!\033[0m\n"
-else
-  echo -e "curl contents:\ncurl --data $DATA https://api.github.com/repos/$GITHUB_REPOSITORY/releases?access_token=$GITHUB_TOKEN"
+# push the release content to github!
+if ! curl --data "$DATA" https://api.github.com/repos/"$GITHUB_REPOSITORY"/releases?access_token="$GITHUB_TOKEN"; then
+  echo "\033[0;31mERROR: Unable to post github release tag information!\033[0m"  && exit 1
 fi
+echo -e "\n\033[1;32mA new github release tag has been created!\033[0m\n"
 
 #-------------------------#
 # Update Debian Changelog #
@@ -107,42 +107,35 @@ fi
 dch -r bionic
 
 # Commit, Tag, and Push
-if [ "$1" == "--dry-run" ]; then
-  echo "deb-packaging changelog diff:"
-  git diff
-else
-  TAG="$VERSION-debian"
-  if ! git commit -am "Release $VERSION" && git tag -a "$TAG" -m "$TAG"; then
-    echo "\033[0;31mERROR: Unable to commit and tag changelog information!\033[0m" && exit 1
-  fi
-  if ! git push && git push origin "$TAG"; then
-    echo "\033[0;31mERROR: Unable to push changelog information!\033[0m" && exit 1
-  fi
-  echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
+TAG="$VERSION-debian"
+if ! git commit -am "Release $VERSION" && git tag -a "$TAG" -m "$TAG"; then
+  echo "\033[0;31mERROR: Unable to commit and tag changelog information!\033[0m" && exit 1
 fi
+if ! git push && git push origin "$TAG"; then
+  echo "\033[0;31mERROR: Unable to push changelog information!\033[0m" && exit 1
+fi
+echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
 
 #------------------#
 # Deploy to stable #
 #------------------#
 
-if [ "$1" != "--dry-run" ]; then
-  # make sure we are up to date on the master branch before rebasing stable
-  git checkout master
-  git reset --hard origin/master
+# make sure we are up to date on the master branch before rebasing stable
+git checkout master
+git reset --hard origin/master
 
-  # checkout or create stable branch
-  if ! git show-ref --verify --quiet refs/heads/stable; then
-    git checkout -b stable
-  else
-    git checkout stable
-  fi
-
-  # rebase off of master & push to remote
-  if ! git rebase origin/master; then
-    echo "\033[0;31mERROR: Unable to merge master into stable!\033[0m" && exit 1
-  fi
-  if ! git push origin stable --force-with-lease; then
-    echo "\033[0;31mERROR: Unable to push changes to stable branch!\033[0m" && exit 1
-  fi
-  echo -e "\n\033[1;32mThe stable branch has been updated successfully!\033[0m\n"
+# checkout or create stable branch
+if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
+  git checkout -b "$RELEASE_BRANCH"
+else
+  git checkout "$RELEASE_BRANCH"
 fi
+
+# rebase off of master & push to remote
+if ! git rebase origin/master; then
+  echo "\033[0;31mERROR: Unable to merge master into $RELEASE_BRANCH!\033[0m" && exit 1
+fi
+if ! git push origin "$RELEASE_BRANCH" --force-with-lease; then
+  echo "\033[0;31mERROR: Unable to push changes to the $RELEASE_BRANCH branch!\033[0m" && exit 1
+fi
+echo -e "\n\033[1;32mSuccessfully updated $RELEASE_BRANCH branch!\033[0m\n"

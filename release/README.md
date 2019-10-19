@@ -14,11 +14,31 @@ This image is intended for use with elementary debian projects. There are a few 
 
 In order to create tags and push changes to various branches, the script needs a github token. Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
 
-### Dry Run
+### Specifying a release branch name
 
-To test out the workflow and view information on what a project's changelog diffs would look like, you can use the dry-run option. For example:
+By default, this action will create and update a branch named 'stable' whenever a release is pushed. The branch name can be set via the `release_branch` input. Example:
 
-## Dry Run Example
+```yaml
+with:
+  release_branch: 'juno'
+```
+
+## Examples
+
+### Simple Example
+
+```yaml
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: elementary/actions/release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Full Example
 
 ```yaml
 jobs:
@@ -28,20 +48,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: elementary/actions/release@master
       with:
-        dryrun: '--dry-run'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-## Full Example
-
-```yaml
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: elementary/actions/release@master
+        release_branch: 'juno'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
