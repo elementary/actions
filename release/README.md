@@ -32,7 +32,16 @@ By default, the examples check for a label called `Release` on the related pull 
 true == contains(join(github.event.pull_request.labels.*.name), 'Release')
 # check for "Example" label:
 true == contains(join(github.event.pull_request.labels.*.name), 'Example')
+```
 
+### Git User
+
+Assuming you override the `GITHUB_TOKEN` secret with another user, you cna use the following environment variables to set the git user & email:
+
+```yaml
+env:
+  GIT_USER_NAME: "example-user"
+  GIT_USER_EMAIL: "exampleuser@example.com"
 ```
 
 ## Examples

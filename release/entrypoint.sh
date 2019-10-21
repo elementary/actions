@@ -10,13 +10,20 @@ if [ -z "$1" ]; then
 else
   RELEASE_BRANCH="$1"
 fi
+# default email and username to elementaryBot
+if [ -z "$GIT_USER_EMAIL" ]; then
+  GIT_USER_EMAIL="builds@elementary.io"
+fi
+if [ -z "$GIT_USER_NAME" ]; then
+  GIT_USER_NAME="elementaryBot"
+fi
 
 # make sure branches are up-to-date
 git fetch
 echo "Setting up git credentials..."
 git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
-git config --global user.email "action@github.com"
-git config --global user.name "GitHub Action"
+git config --global user.email "$GIT_USER_EMAIL"
+git config --global user.name "$GIT_USER_NAME"
 echo "Git credentials configured."
 
 # get the project's name:
@@ -107,10 +114,10 @@ dch -Mr bionic
 
 # Commit, Tag, and Push
 TAG="$VERSION-debian"
-if ! git commit -am "Release $VERSION" && git tag -a "$TAG" -m "$TAG"; then
+if ! (git commit -am "Release $VERSION" && git tag -a "$TAG" -m "$TAG"); then
   echo "\033[0;31mERROR: Unable to commit and tag changelog information!\033[0m" && exit 1
 fi
-if ! git push && git push origin "$TAG"; then
+if ! (git push && git push origin "$TAG"); then
   echo "\033[0;31mERROR: Unable to push changelog information!\033[0m" && exit 1
 fi
 echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
