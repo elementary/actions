@@ -8,6 +8,8 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.release_branch }}
 branding:
   icon: 'git-pull-request'
   color: 'green'
