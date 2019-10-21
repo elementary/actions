@@ -50,7 +50,7 @@ GITHUB_RELEASE_NOTE="$PROJECT $VERSION is out! \n\nChanges:\n\n$MARKDOWN_NOTES"
 DATA="
 {
   \"tag_name\": \"$VERSION\",
-  \"target_commitish\": \"master\",
+  \"target_commitish\": \"$GITHUB_SHA\",
   \"name\": \"$PROJECT $VERSION Released\",
   \"body\": \"$GITHUB_RELEASE_NOTE\",
   \"draft\": false,
