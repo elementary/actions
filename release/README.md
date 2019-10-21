@@ -43,7 +43,7 @@ true == contains(join(github.event.pull_request.labels.*.name), 'Example')
 name: Release
 on:
   pull_request:
-    branch: master
+    branches: master
     types: closed
 jobs:
   release:
