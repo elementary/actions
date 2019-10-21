@@ -23,17 +23,35 @@ with:
   release_branch: 'juno'
 ```
 
+### Specifying a label
+
+By default, the examples check for a label called `Release` on the related pull request. This can be set in the workflow action by changing the following:
+
+```yaml
+# check for "Release" label:
+true == contains(join(github.event.pull_request.labels.*.name), 'Release')
+# check for "Example" label:
+true == contains(join(github.event.pull_request.labels.*.name), 'Example')
+
+```
+
 ## Examples
 
 ### Simple Example
 
 ```yaml
+name: Release
+on:
+  pull_request:
+    branch: master
+    types: closed
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: elementary/actions/release@master
+      if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,14 +59,20 @@ jobs:
 ### Full Example
 
 ```yaml
+name: Release
+on:
+  pull_request:
+    branch: master
+    types: closed
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: elementary/actions/release@master
-      with:
-        release_branch: 'juno'
+      if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_branch: 'juno'
 ```

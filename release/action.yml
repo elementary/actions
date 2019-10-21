@@ -8,8 +8,6 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 branding:
   icon: 'git-pull-request'
   color: 'green'

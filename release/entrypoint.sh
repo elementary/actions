@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [ -z "${GITHUB_TOKEN}" ]; then
+  echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
+fi
+
 if [ -z "$1" ]; then
   RELEASE_BRANCH="stable"
 else
@@ -14,13 +18,6 @@ git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GI
 git config --global user.email "action@github.com"
 git config --global user.name "GitHub Action"
 echo "Git credentials configured."
-
-# Check if this is a release branch that was merged in
-if ! git log --oneline -1 | grep -F "[release]" >/dev/null; then
-  # not a release, nothing to do here.
-  echo "not a release."
-  exit 0
-fi
 
 # get the project's name:
 PROJECT="$(basename "$GITHUB_REPOSITORY")"
