@@ -62,7 +62,7 @@ jobs:
 name: Release
 on:
   pull_request:
-    branch: master
+    branches: master
     types: closed
 jobs:
   release:
