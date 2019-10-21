@@ -68,9 +68,8 @@ echo -e "\n\033[1;32mA new github release tag has been created!\033[0m\n"
 # Update Debian Changelog #
 #-------------------------#
 
-# make sure we are up to date on the master branch
-git checkout master
-git reset --hard origin/master
+# make sure we are in sync with HEAD
+git reset --hard HEAD
 
 # get all commit subjects since last tag
 COMMITS="$(git log "$(git describe --tags "$(git rev-list --tags --max-count=1)")"..HEAD --pretty="format:%s")"
@@ -84,24 +83,24 @@ fi
 
 if [ -z "$FILTERED_COMMITS" ]; then
   echo "no changes since last tag, an empty debian changelog will be created."
-  dch -v "$VERSION" "no changes since last release."
+  dch -mv "$VERSION" "no changes since last release."
 else
   # Get the first changelog entry
   FIRST_CHANGE="$(echo "$FILTERED_COMMITS" | head -n 1)"
   # Create a versioned release and add the first line of the changelog
-  dch -v "$VERSION" "$FIRST_CHANGE"
+  dch -mv "$VERSION" "$FIRST_CHANGE"
   # iterate over any other changelog entries, if there are any
   REMAINING_CHANGES="$(echo "$FILTERED_COMMITS"| tail -n +2)"
   if [ -n "$REMAINING_CHANGES" ]; then
     while read -r line; do
       # Append another list item to the changelog
-      dch -a "$line"
+      dch -ma "$line"
     done <<< "$REMAINING_CHANGES"
   fi
 fi
 
 # Set the release channel/distro
-dch -r bionic
+dch -mr bionic
 
 # Commit, Tag, and Push
 TAG="$VERSION-debian"
@@ -117,9 +116,9 @@ echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
 # Deploy to stable #
 #------------------#
 
-# make sure we are up to date on the master branch before rebasing stable
-git checkout master
-git reset --hard origin/master
+# point head back to what it was before checking out deb-packaging
+git checkout -
+git reset --hard HEAD
 
 # checkout or create stable branch
 if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
