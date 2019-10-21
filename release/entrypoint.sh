@@ -83,24 +83,24 @@ fi
 
 if [ -z "$FILTERED_COMMITS" ]; then
   echo "no changes since last tag, an empty debian changelog will be created."
-  dch -mv "$VERSION" "no changes since last release."
+  dch -Mv "$VERSION" "no changes since last release."
 else
   # Get the first changelog entry
   FIRST_CHANGE="$(echo "$FILTERED_COMMITS" | head -n 1)"
   # Create a versioned release and add the first line of the changelog
-  dch -mv "$VERSION" "$FIRST_CHANGE"
+  dch -Mv "$VERSION" "$FIRST_CHANGE"
   # iterate over any other changelog entries, if there are any
   REMAINING_CHANGES="$(echo "$FILTERED_COMMITS"| tail -n +2)"
   if [ -n "$REMAINING_CHANGES" ]; then
     while read -r line; do
       # Append another list item to the changelog
-      dch -ma "$line"
+      dch -Ma "$line"
     done <<< "$REMAINING_CHANGES"
   fi
 fi
 
 # Set the release channel/distro
-dch -mr bionic
+dch -Mr bionic
 
 # Commit, Tag, and Push
 TAG="$VERSION-debian"
