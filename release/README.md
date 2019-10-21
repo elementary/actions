@@ -48,10 +48,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
     - uses: actions/checkout@v1
     - uses: elementary/actions/release@master
-      if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -67,10 +67,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
     - uses: actions/checkout@v1
     - uses: elementary/actions/release@master
-      if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
