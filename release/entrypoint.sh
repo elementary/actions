@@ -15,12 +15,12 @@ if [ -z "$1" ]; then
 else
   RELEASE_BRANCH="$1"
 fi
-# default email and username to elementaryBot
+# default email and username to github actions user
 if [ -z "$GIT_USER_EMAIL" ]; then
-  GIT_USER_EMAIL="builds@elementary.io"
+  GIT_USER_EMAIL="action@github.com"
 fi
 if [ -z "$GIT_USER_NAME" ]; then
-  GIT_USER_NAME="elementaryBot"
+  GIT_USER_NAME="GitHub Action"
 fi
 
 # make sure branches are up-to-date
