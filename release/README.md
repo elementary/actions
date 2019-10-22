@@ -32,7 +32,17 @@ By default, the examples check for a label called `Release` on the related pull 
 true == contains(join(github.event.pull_request.labels.*.name), 'Release')
 # check for "Example" label:
 true == contains(join(github.event.pull_request.labels.*.name), 'Example')
+```
 
+### Git User
+
+Instead of using the default github token (`GITHUB_TOKEN`), you can use a custom git user token with the `GIT_USER_TOKEN` environment variable. You can also use the following environment variables to set the git user & email:
+
+```yaml
+env:
+  GIT_USER_TOKEN: "${{ secrets.GIT_USER_TOKEN }}"
+  GIT_USER_NAME: "example-user"
+  GIT_USER_EMAIL: "exampleuser@example.com"
 ```
 
 ## Examples
