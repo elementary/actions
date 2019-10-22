@@ -2,7 +2,7 @@
 set -e
 
 # if a custom token is provided, use it instead of the default github token.
-if [ -e "$GIT_USER_TOKEN" ]; then
+if [ -n "$GIT_USER_TOKEN" ]; then
   GITHUB_TOKEN="$GIT_USER_TOKEN"
 fi
 
