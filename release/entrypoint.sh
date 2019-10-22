@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# if a custom token is provided, use it instead of the default github token.
+if [ -e "$GIT_USER_TOKEN" ]; then
+  GITHUB_TOKEN="$GIT_USER_TOKEN"
+fi
+
 if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi

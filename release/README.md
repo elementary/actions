@@ -36,10 +36,11 @@ true == contains(join(github.event.pull_request.labels.*.name), 'Example')
 
 ### Git User
 
-Assuming you override the `GITHUB_TOKEN` secret with another user, you cna use the following environment variables to set the git user & email:
+Instead of using the default github token (`GITHUB_TOKEN`), you can use a custom git user token with the `GIT_USER_TOKEN` environment variable. You can also use the following environment variables to set the git user & email:
 
 ```yaml
 env:
+  GIT_USER_TOKEN: "${{ secrets.GIT_USER_TOKEN }}"
   GIT_USER_NAME: "example-user"
   GIT_USER_EMAIL: "exampleuser@example.com"
 ```
