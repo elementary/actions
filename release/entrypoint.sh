@@ -15,7 +15,7 @@ if [ -z "$1" ]; then
 else
   RELEASE_BRANCH="$1"
 fi
-# default email and username to elementaryBot
+# default email and username to github actions user
 if [ -z "$GIT_USER_EMAIL" ]; then
   GIT_USER_EMAIL="action@github.com"
 fi
