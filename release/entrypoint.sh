@@ -87,7 +87,7 @@ echo -e "\n\033[1;32mA new github release tag has been created!\033[0m\n"
 git reset --hard HEAD
 
 # get all commit subjects since last tag
-COMMITS="$(git log "$(git describe --tags "$(git rev-list --tags --max-count=1)")"..HEAD --pretty="format:%s")"
+COMMITS="$(git log "$(git tag -l '*-debian' | tail -n1 | cut -d'-' -f 1)"..HEAD --pretty="format:%s")"
 # filter out commits involving translations and commits that don't have a related merge number
 FILTERED_COMMITS="$(echo "$COMMITS" | awk '!/Weblate/' | awk '!/weblate/' | grep '(#')"
 
