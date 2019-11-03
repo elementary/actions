@@ -1,0 +1,12 @@
+name: 'Gettext Auto-update'
+description: 'Push the new gettext template and translations when required'
+inputs:
+  github_token:
+    description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'message-circle'
+  color: 'green'
