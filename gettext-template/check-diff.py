@@ -10,7 +10,15 @@ def commit_to_repo(repo):
         if f.endswith ('.po') or f.endswith ('.pot'):
             repo.git.add(f)
     repo.git.commit('-m', 'Update translation template')
-    repo.remotes.origin.push()
+    infos = repo.remotes.origin.push()
+    has_error=False
+    error_msg=''
+    for info in infos:
+        if info.flags & git.remote.PushInfo.ERROR == git.remote.PushInfo.ERROR:
+            has_error=True
+            error_msg += info.summary
+    if has_error:
+        raise NameError('Unable to push to repository: ' + error_msg)
 
 print('Checking the repository for new translations...')
 repo = git.Repo('.')
