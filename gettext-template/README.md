@@ -11,7 +11,7 @@ This image is intended for use with elementary debian projects. There are a few 
 
 ### Environment Variables
 
-In order to create tags and push changes to various branches, the script needs a github token. Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
+In order to create tags and push changes to various branches, the script needs a GitHub token. Keep in mind, when using GitHub workflows, the virtual environment [automatically comes with a generated GitHub token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret). However, if your translation branch is protected, you may need to generate a user token with admin permissions.
 
 ### Specifying a translation branch name
 
@@ -24,7 +24,7 @@ with:
 
 ### Git User
 
-Instead of using the default github token (`GITHUB_TOKEN`), you can use a custom git user token with the `GIT_USER_TOKEN` environment variable. You can also use the following environment variables to set the git user & email:
+Instead of using the default GitHub token (`GITHUB_TOKEN`), you can use a custom git user token with the `GIT_USER_TOKEN` environment variable. You can also use the following environment variables to set the git user & email:
 
 ```yaml
 env:
