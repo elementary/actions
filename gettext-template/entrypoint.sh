@@ -67,7 +67,7 @@ if ! git checkout $TRANSLATION_BRANCH; then
 fi
 
 # update the translation template and push changes if required
-meson build && ninja -C build && ninja -C build $(git ls-files | grep .pot | sed 's/.*\///' | sed 's/.pot/-update-po/')
+meson build && ninja -C build && ninja -C build $(git ls-files | grep \.pot$ | sed 's/.*\///' | sed 's/.pot/-update-po/')
 echo -e "\n\033[1;32mSuccessfully build the project!\033[0m\n"
 python3 /check-diff.py
 
