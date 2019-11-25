@@ -50,21 +50,20 @@ echo "Version: $VERSION"
 PREVIOUS_VERSION="$(git tag -l | grep -v 'debian' | tail -n1 )"
 
 # get the release notes, remove any empty lines & padded spacing
-RELEASE_NOTE_RAW="$(xmlstarlet sel -t -v '//release[1]' -n data/"$APPDATA"| awk 'NF'| awk '{$1=$1}1')"
+RELEASE_NOTE_RAW="$(xmlstarlet sel -t -m '//release[1]/description/*' -n -c '.' -n data/"$APPDATA" | awk 'NF' | awk '{$1=$1}1')"
 # replace quotes with commented quotes to prevent breakage in github release note string
 RELEASE_NOTES_SANITIZED="${RELEASE_NOTE_RAW//\"/\\\"}"
 echo "Release Note Content:"
 echo -e "$RELEASE_NOTES_SANITIZED\n"
 
-
 #-----------------------#
 # Create Github Release #
 #-----------------------#
 
-# add ul stars to the notes and replace any newlines with a newline character instead
-MARKDOWN_NOTES="$(echo "$RELEASE_NOTES_SANITIZED" | awk '$0="* "$0' | awk '{printf "%s\\n", $0}')"
+# replace newlines with a newline character
+MARKDOWN_NOTES="$(echo "$RELEASE_NOTES_SANITIZED" | awk '{printf "%s\\n", $0}')"
 # add the project name and version to release note
-GITHUB_RELEASE_NOTE="$PROJECT $VERSION is out! \n\nChanges:\n\n$MARKDOWN_NOTES"
+GITHUB_RELEASE_NOTE="$PROJECT $VERSION is out! \n\n$MARKDOWN_NOTES"
 DATA="
 {
   \"tag_name\": \"$VERSION\",
