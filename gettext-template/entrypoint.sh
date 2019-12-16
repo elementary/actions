@@ -10,6 +10,10 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
+if [ -n "$REGENERATE_PO" ]; then
+  REGENERATE_PO=false
+fi
+
 if [ -z "$1" ]; then
   TRANSLATION_BRANCH="master"
 else
@@ -67,7 +71,14 @@ if ! git checkout $TRANSLATION_BRANCH; then
 fi
 
 # update the translation template and push changes if required
-meson build && ninja -C build && ninja -C build $(git ls-files | grep \.pot$ | sed 's/.*\///' | sed 's/.pot/-update-po/')
+meson build
+ninja -C build
+if $REGENERATE_PO; then
+GETTEXT_TARGETS=$(git ls-files | grep \.pot$ | sed 's/.*\///' | sed 's/.pot/-update-po/')
+else
+GETTEXT_TARGETS=$(git ls-files | grep \.pot$ | sed 's/.*\///' | sed 's/.pot/-pot/')
+fi
+ninja -C build $GETTEXT_TARGETS
 echo -e "\n\033[1;32mSuccessfully build the project!\033[0m\n"
 python3 /check-diff.py
 

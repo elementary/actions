@@ -39,6 +39,15 @@ with:
   translation_branch: 'i18n'
 ```
 
+### Include the translation template
+
+By default, this action will only rebuild the translation template. It is also possible to include the language by setting the `regenerate_po` input to true. Example:
+
+```yaml
+with:
+  regenerate_po: 'true'
+```
+
 ## Examples
 
 ### Simple Example
@@ -75,4 +84,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         translation_branch: 'i18n'
+        regenerate_po: 'true'
 ```
