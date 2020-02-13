@@ -7,6 +7,5 @@ RUN apt-get update && apt-get install -y devscripts equivs meson git policykit-1
 RUN groupadd -r elementary && useradd --no-log-init -r -g elementary elementary
 
 COPY entrypoint.sh /entrypoint.sh
-COPY check-diff.py /check-diff.py
 
 ENTRYPOINT ["/entrypoint.sh"]
