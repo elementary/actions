@@ -5,6 +5,11 @@ set -e
 # Install the build dependencies #
 #--------------------------------#
 
+echo "Setting up git credentials..."
+git config --global user.email "action@github.com"
+git config --global user.name "GitHub Action"
+echo "Git credentials configured."
+
 # make sure we are in sync with HEAD
 git reset --hard HEAD
 
