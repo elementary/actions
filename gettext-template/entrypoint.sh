@@ -53,8 +53,8 @@ if ! git checkout deb-packaging; then
 fi
 
 # Create a fake package depending on the build dependency and install/remove it
-sudo apt -y update
-mk-build-deps --build-dep --install --remove --tool 'apt -y' --root-cmd sudo debian/control
+sudo apt-get -qq update
+mk-build-deps --build-dep --install --remove --tool 'apt-get -qq' --root-cmd sudo debian/control
 
 echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
 
