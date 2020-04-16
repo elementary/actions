@@ -1,0 +1,15 @@
+name: 'Build'
+description: 'Build a project & validate appstream data'
+inputs:
+  dependencies:
+    description: 'space separated list of dependencies to install'
+    required: false
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.dependencies }}
+branding:
+  icon: 'git-pull-request'
+  color: 'green'

@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: elementary/actions/release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: elementary/actions/release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
