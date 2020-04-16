@@ -1,0 +1,8 @@
+name: 'Validate Appstream Data'
+description: 'Validate appstream data'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'git-pull-request'
+  color: 'green'
