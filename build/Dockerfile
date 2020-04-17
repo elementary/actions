@@ -1,8 +1,8 @@
-FROM debian:stable-slim
+FROM elementary/docker:unstable
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y appstream-util meson valac
+RUN apt-get update && apt-get install -y appstream appstream-util meson valac
 
 # create and use an elementary user instead of root
 RUN groupadd -r elementary && useradd --no-log-init -r -g elementary elementary
