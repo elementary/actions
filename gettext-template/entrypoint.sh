@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export DEBIAN_FRONTEND="noninteractive"
+
 # if a custom token is provided, use it instead of the default github token.
 if [ -n "$GIT_USER_TOKEN" ]; then
   GITHUB_TOKEN="$GIT_USER_TOKEN"
