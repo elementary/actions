@@ -12,10 +12,10 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
-if [ -z "$1" ]; then
+if [ -z "${INPUT_TRANSLATION_BRANCH}" ]; then
   TRANSLATION_BRANCH="master"
 else
-  TRANSLATION_BRANCH="$1"
+  TRANSLATION_BRANCH="${INPUT_TRANSLATION_BRANCH}"
 fi
 
 # default email and username to github actions user
