@@ -4,6 +4,9 @@ inputs:
   github_token:
     description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
     required: true
+  translation_branch:
+    description: 'The name of a branch that contains translation files'
+    required: false
   regenerate_po:
     description: 'Also regenerate the .po files'
     required: false
