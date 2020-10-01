@@ -139,7 +139,7 @@ git checkout -
 git reset --hard HEAD
 
 # get default branch, see: https://davidwalsh.name/get-default-branch-name
-DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
+DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
 
 # checkout or create stable branch
 if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
