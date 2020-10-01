@@ -149,7 +149,7 @@ else
 fi
 
 # rebase off of default branch & push to remote
-if ! git rebase "origin/$DEFAULT_BRANCH"; then
+if ! git rebase origin/"$DEFAULT_BRANCH"; then
   echo "\033[0;31mERROR: Unable to merge default branch $DEFAULT_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
 fi
 if ! git push origin "$RELEASE_BRANCH" --force-with-lease; then
