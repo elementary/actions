@@ -145,9 +145,12 @@ else
   git checkout "$RELEASE_BRANCH"
 fi
 
-# rebase off of master & push to remote
-if ! git rebase origin/master; then
-  echo "\033[0;31mERROR: Unable to merge master into $RELEASE_BRANCH!\033[0m" && exit 1
+# get default branch
+DEFAULT_BRANCH=$(git symbolic-ref --short HEAD)
+
+# rebase off of default branch & push to remote
+if ! git rebase "origin/$DEFAULT_BRANCH"; then
+  echo "\033[0;31mERROR: Unable to merge default branch $DEFAULT_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
 fi
 if ! git push origin "$RELEASE_BRANCH" --force-with-lease; then
   echo "\033[0;31mERROR: Unable to push changes to the $RELEASE_BRANCH branch!\033[0m" && exit 1
