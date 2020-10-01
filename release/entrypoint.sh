@@ -138,7 +138,7 @@ echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
 git checkout -
 git reset --hard HEAD
 
-# get default branch
+# get default branch, see: https://davidwalsh.name/get-default-branch-name
 DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
 
 # checkout or create stable branch
