@@ -138,15 +138,15 @@ echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
 git checkout -
 git reset --hard HEAD
 
+# get default branch
+DEFAULT_BRANCH=$(git symbolic-ref --short HEAD)
+
 # checkout or create stable branch
 if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
   git checkout -b "$RELEASE_BRANCH"
 else
   git checkout "$RELEASE_BRANCH"
 fi
-
-# get default branch
-DEFAULT_BRANCH=$(git symbolic-ref --short HEAD)
 
 # rebase off of default branch & push to remote
 if ! git rebase "origin/$DEFAULT_BRANCH"; then
