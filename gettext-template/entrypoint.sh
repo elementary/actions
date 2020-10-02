@@ -12,8 +12,11 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
+# get default branch, see: https://davidwalsh.name/get-default-branch-name
+DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
+
 if [ -z "${INPUT_TRANSLATION_BRANCH}" ]; then
-  TRANSLATION_BRANCH="master"
+  TRANSLATION_BRANCH=DEFAULT_BRANCH
 else
   TRANSLATION_BRANCH="${INPUT_TRANSLATION_BRANCH}"
 fi
