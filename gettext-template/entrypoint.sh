@@ -16,7 +16,7 @@ fi
 DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
 
 if [ -z "${INPUT_TRANSLATION_BRANCH}" ]; then
-  TRANSLATION_BRANCH=DEFAULT_BRANCH
+  TRANSLATION_BRANCH="${DEFAULT_BRANCH}"
 else
   TRANSLATION_BRANCH="${INPUT_TRANSLATION_BRANCH}"
 fi
