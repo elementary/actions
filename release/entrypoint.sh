@@ -88,8 +88,8 @@ git reset --hard HEAD
 
 # get all commit subjects since previous version tag
 COMMITS="$(git log "$PREVIOUS_VERSION"..HEAD --pretty="format:%s")"
-# filter out commits involving translations, commits that don't have a related merge number and duplicate commits
-FILTERED_COMMITS="$(echo "$COMMITS" | grep -v 'Weblate' | grep -v 'weblate' | awk '!seen[$0]++')"
+# filter out commits involving translations, commits that don't have a related merge number, duplicate commits and commits of type 'Update file.ext'
+FILTERED_COMMITS="$(echo "$COMMITS" | grep -v 'Weblate' | grep -v 'weblate' | awk '!seen[$0]++' | sed -E '/^Update\ \S+\.\S+$/d')"
 
 echo "Debian Changelog Content:"
 echo -e "$FILTERED_COMMITS\n"
