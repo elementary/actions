@@ -54,6 +54,7 @@ if ! git checkout deb-packaging; then
 fi
 
 sudo apt-get -qq update
+sudo apt-get -qq dist-upgrade
 sudo apt-get --no-install-recommends -qq build-dep .
 
 echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
