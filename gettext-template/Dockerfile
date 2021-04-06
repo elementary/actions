@@ -2,7 +2,7 @@ FROM elementary/docker:unstable
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -qq update && apt-get install -qq meson git python3-git libxml2-utils appstream policykit-1 sudo
+RUN apt-get -yqq update && apt-get install -yqq meson git python3-git libxml2-utils appstream policykit-1 sudo
 
 RUN groupadd -r elementary && useradd --no-log-init -r -g elementary elementary
 
