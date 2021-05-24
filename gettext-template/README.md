@@ -47,7 +47,11 @@ with:
 
 ## Install Dependencies
 
-If you need dependencies not included in the package `elementary-sdk`, you need to install manually by using the `dependencies` input. Example:
+If you need dependencies not included in the package `elementary-sdk` on build, you need to install them manually.
+
+This action automatically install dependencies listed in `debian/control` file in the `deb-packaging` branch if it exists.
+
+If your project doesn't have the `deb-packaging` branch, you can use the `dependencies` input. Example:
 
 ```yaml
 with:
