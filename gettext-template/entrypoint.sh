@@ -48,23 +48,27 @@ echo "Project: $PROJECT"
 # make sure we are in sync with HEAD
 git reset --hard HEAD
 
-# move to the debian packaging branch
-if ! git checkout deb-packaging; then
-  echo "\033[0;31mERROR: Unable to checkout the 'deb-packaging' branch. Does it exist?\033[0m" && exit 1
-fi
-
 sudo apt-get -qq update
 sudo apt-get -qq dist-upgrade
-sudo apt-get --no-install-recommends -qq build-dep .
 
-echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
+# move to the debian packaging branch
+if git checkout deb-packaging; then
+  sudo apt-get --no-install-recommends -qq build-dep .
+  git checkout -
+  echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
+# if deb-packaging branch does not exist, try to install provided dependencies as an input
+elif [ -n "$INPUT_DEPENDENCIES" ]; then
+  sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
+  echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
+else
+  echo -e "\n\033[1;32mNo additional dependencies provided.\033[0m\n"
+fi
 
 #---------------------------------#
 # Update the translation template #
 #---------------------------------#
 
 # point head back to what it was before checking out deb-packaging
-git checkout -
 git reset --hard HEAD
 
 if ! git checkout $TRANSLATION_BRANCH; then

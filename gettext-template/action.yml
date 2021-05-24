@@ -1,6 +1,9 @@
 name: 'Gettext Auto-update'
 description: 'Push the new gettext template and translations when required'
 inputs:
+  dependencies:
+    description: 'Additional dependencies you need in your project, separated in a single space'
+    required: false
   github_token:
     description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
     required: true
