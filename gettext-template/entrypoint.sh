@@ -47,10 +47,9 @@ echo "Project: $PROJECT"
 
 # Install additional dependencies if provided
 if [ -n "$INPUT_DEPENDENCIES" ]; then
-  DEPS="$INPUT_DEPENDENCIES"
   sudo apt-get -qq update
   sudo apt-get -qq dist-upgrade
-  sudo apt-get install --no-install-recommends -qq $DEPS
+  sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
 fi
 
 #---------------------------------#
