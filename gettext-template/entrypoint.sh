@@ -55,14 +55,14 @@ sudo apt-get -qq dist-upgrade
 if git checkout deb-packaging; then
   sudo apt-get --no-install-recommends -qq build-dep .
   git checkout -
+  echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
+# if deb-packaging branch does not exist, try to install provided dependencies as an input
+elif [ -n "$INPUT_DEPENDENCIES" ]; then
+  sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
+  echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
 else
-  # if deb-packaging branch does not exist, install provided dependencies as an input
-  if [ -n "$INPUT_DEPENDENCIES" ]; then
-    sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
-  fi
+  echo -e "\n\033[1;32mNo additional dependencies provided.\033[0m\n"
 fi
-
-echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
 
 #---------------------------------#
 # Update the translation template #
