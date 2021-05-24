@@ -45,18 +45,30 @@ echo "Project: $PROJECT"
 # Install the build dependencies #
 #--------------------------------#
 
-# Install additional dependencies if provided
-if [ -n "$INPUT_DEPENDENCIES" ]; then
-  sudo apt-get -qq update
-  sudo apt-get -qq dist-upgrade
-  sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
+# make sure we are in sync with HEAD
+git reset --hard HEAD
+
+sudo apt-get -qq update
+sudo apt-get -qq dist-upgrade
+
+# move to the debian packaging branch
+if git checkout deb-packaging; then
+  sudo apt-get --no-install-recommends -qq build-dep .
+  git checkout -
+else
+  # if deb-packaging branch does not exist, install provided dependencies as an input
+  if [ -n "$INPUT_DEPENDENCIES" ]; then
+    sudo apt-get install --no-install-recommends -qq $INPUT_DEPENDENCIES
+  fi
 fi
+
+echo -e "\n\033[1;32mInstalled all the build dependencies!\033[0m\n"
 
 #---------------------------------#
 # Update the translation template #
 #---------------------------------#
 
-# make sure we are in sync with HEAD
+# point head back to what it was before checking out deb-packaging
 git reset --hard HEAD
 
 if ! git checkout $TRANSLATION_BRANCH; then
