@@ -4,10 +4,7 @@ This action automates the manual steps needed to regenerate the gettext template
 
 ## Requirements
 
-This image is intended for use with elementary debian projects. There are a few requirements before getting started:
-
-  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project. Docs: [debian control](https://elementary.io/docs/code/getting-started#debian-control)
-  2. The project needs to use the meson build system
+This image is intended for use with elementary projects. The project needs to use the meson build system.
 
 ### Environment Variables
 
@@ -48,6 +45,15 @@ with:
   regenerate_po: 'true'
 ```
 
+## Install Dependencies
+
+If you need dependencies not included in the package `elementary-sdk`, you need to install manually by using the `dependencies` input. Example:
+
+```yaml
+with:
+  dependencies: 'libgtksourceview-4.0-dev libgstreamer1.0-dev'
+```
+
 ## Examples
 
 ### Simple Example
@@ -83,6 +89,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        dependencies: 'libgtksourceview-4.0-dev'
         translation_branch: 'i18n'
         regenerate_po: 'true'
 ```
