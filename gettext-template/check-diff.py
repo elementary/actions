@@ -7,9 +7,15 @@ def commit_to_repo(repo):
     print('There are translation changes, committing changes to repository!')
     files = repo.git.diff(None, name_only=True)
     for f in files.split('\n'):
-        if f.endswith ('.po') or f.endswith ('.pot'):
+        if f.endswith ('.po'):
+            has_po=True
             repo.git.add(f)
-    repo.git.commit('-m', 'Update translation template')
+        elif f.endswith ('.pot'):
+            repo.git.add(f)
+    if has_po:
+        repo.git.commit('-m', 'Update translation files')
+    else:
+        repo.git.commit('-m', 'Update translation template')
     infos = repo.remotes.origin.push()
     has_error=False
     error_msg=''
