@@ -76,7 +76,7 @@ DATA="
 "
 
 # push the release content to github!
-if ! curl -u "$GIT_USER_NAME":"$GITHUB_TOKEN" --data "$DATA" https://api.github.com/repos/"$GITHUB_REPOSITORY"/releases; then
+if ! curl -H 'Authorization: token $GITHUB_TOKEN' --data "$DATA" https://api.github.com/repos/"$GITHUB_REPOSITORY"/releases; then
   echo "\033[0;31mERROR: Unable to post github release tag information!\033[0m"  && exit 1
 fi
 echo -e "\n\033[1;32mA new github release tag has been created!\033[0m\n"
