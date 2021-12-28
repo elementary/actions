@@ -14,6 +14,13 @@ This image is intended for use with elementary debian projects. There are a few 
 
 In order to create tags and push changes to various branches, the script needs a github token. Keep in mind, when using github workflows, the virtual environment [automatically comes with a generated github token secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret).
 
+To change the debian release channel in the project's debian changelog config, you can set the `RELEASE_CHANNEL` environment variable:
+
+```yaml
+env:
+  RELEASE_CHANNEL: focal
+```
+
 ### Specifying a release branch name
 
 By default, this action will create and update a branch named 'stable' whenever a release is pushed. The branch name can be set via the `release_branch` input. Example:
