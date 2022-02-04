@@ -1,18 +1,26 @@
+---
+
 name: 'Gettext Auto-update'
 description: 'Push the new gettext template and translations when required'
+
 inputs:
-  github_token:
-    description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
-    required: true
+  git_email:
+    description: 'Email address to use for git commits'
+    default: github-actions@github.com
+  git_name:
+    description: 'Name to use for git commits'
+    default: github-actions
   translation_branch:
     description: 'The name of a branch that contains translation files'
     required: false
   regenerate_po:
     description: 'Also regenerate the .po files'
     required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
+
 branding:
   icon: 'message-circle'
   color: 'green'
