@@ -12,6 +12,9 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
+# Git repository is owned by another user, mark it as safe
+git config --global --add safe.directory /github/workspace
+
 # get default branch, see: https://davidwalsh.name/get-default-branch-name
 DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
 
@@ -35,7 +38,6 @@ echo "Setting up git credentials..."
 git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
 git config --global user.email "$GIT_USER_EMAIL"
 git config --global user.name "$GIT_USER_NAME"
-git config --global --add safe.directory /github/workspace
 echo "Git credentials configured."
 
 # get the project's name:
