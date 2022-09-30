@@ -1,4 +1,5 @@
-FROM elementary/docker:unstable
+ARG ELEMENTARY_CODENAME=unstable
+FROM elementary/docker:${ELEMENTARY_CODENAME}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
