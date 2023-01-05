@@ -33,6 +33,7 @@ echo "Setting up git credentials..."
 git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
 git config --global user.email "$GIT_USER_EMAIL"
 git config --global user.name "$GIT_USER_NAME"
+git config --global --add safe.directory /github/workspace
 echo "Git credentials configured."
 
 # get the project's name:
