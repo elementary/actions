@@ -12,7 +12,7 @@ po_files = glob.glob("po/*.po")
 lang_keys = [filename.replace("po/", "").replace(".po", "")
              for filename in po_files]
 
-completion_map = {args.native_language: "100"}
+completion_map = {}
 
 
 def percent(denominator, divisor):
@@ -32,6 +32,8 @@ for key in lang_keys:
     translated = [unit for unit in store.units if unit.istranslated()]
 
     completion_map[key] = round(percent(len(translated), len(units)))
+
+completion_map[args.native_language] = "100"
 
 appstream_tree = etree.parse(args.file)
 appstream_root = appstream_tree.getroot()
