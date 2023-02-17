@@ -14,6 +14,7 @@ lang_keys = [filename.replace("po/", "").replace(".po", "")
 
 completion_map = {args.native_language: "100"}
 
+
 def percent(denominator, divisor):
     if divisor == 0:
         return 0
@@ -27,7 +28,7 @@ for key in lang_keys:
     except ValueError as e:
         continue
 
-    units = [unit for unit in store.units if unit.source]
+    units = [unit for unit in store.units if unit.istranslatable()]
     translated = [unit for unit in store.units if unit.istranslated()]
 
     completion_map[key] = round(percent(len(translated), len(units)))
@@ -42,4 +43,5 @@ for k, v in completion_map.items():
     etree.SubElement(languages, "lang", {"percentage": str(v)}).text = k
 
 etree.indent(appstream_root)
-appstream_tree.write(args.file.name, encoding="utf-8", xml_declaration=True, pretty_print=True)
+appstream_tree.write(args.file.name, encoding="utf-8",
+                     xml_declaration=True, pretty_print=True)
