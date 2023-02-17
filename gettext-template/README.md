@@ -48,6 +48,33 @@ with:
   regenerate_po: 'true'
 ```
 
+### Updating AppStream completion percentages
+
+If you specify the path to your AppStream XML file, this action will add the `<languages>` section with details about the percentage completion of each translation. Example:
+
+```xml
+  <languages>
+    <lang percentage="78">en_GB</lang>
+    <lang percentage="85">ja</lang>
+    <lang percentage="80">uk</lang>
+  </languages>
+```
+
+To configure this, do the following:
+
+```yaml
+with:
+  appstream_file: 'data/appcenter.metainfo.xml.in'
+```
+
+**Note:** This action assumes that the native language of the application is English (en) by default, and sets the translation percentage of that language to 100%. if this is not the case, you can change the native language as follows:
+
+```yaml
+with:
+  appstream_file: 'data/appcenter.metainfo.xml.in'
+  native_language: 'de'
+```
+
 ## Examples
 
 ### Simple Example

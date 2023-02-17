@@ -84,5 +84,10 @@ GETTEXT_TARGETS=$(git ls-files | grep \.pot$ | sed 's/.*\///' | sed 's/.pot/-pot
 fi
 ninja -C build $GETTEXT_TARGETS
 echo -e "\n\033[1;32mSuccessfully build the project!\033[0m\n"
+
+if [ -n "${INPUT_APPSTREAM_FILE}" ]; then
+  python3 /update-appstream-percentages.py "${INPUT_APPSTREAM_FILE}" --native-language "${INPUT_NATIVE_LANGUAGE}"
+fi
+
 python3 /check-diff.py
 

@@ -10,6 +10,13 @@ def commit_to_repo(repo):
         if f.endswith ('.po') or f.endswith ('.pot'):
             repo.git.add(f)
     repo.git.commit('-m', 'Update translation template')
+
+    files = repo.git.diff(None, name_only=True)
+    for f in files.split('\n'):
+        if ".xml" in f:
+            repo.git.add(f)
+    repo.git.commit('-m', 'Update AppStream translation percentages')
+
     infos = repo.remotes.origin.push()
     has_error=False
     error_msg=''
@@ -27,7 +34,7 @@ files = repo.git.diff(None, name_only=True)
 needs_commit=False
 
 for f in files.split('\n'):
-    if f.endswith ('.pot'):
+    if f.endswith ('.pot') or ".xml" in f:
         raw_diff = repo.git.diff(t, f)
         output = io.StringIO()
         for line in raw_diff.splitlines():

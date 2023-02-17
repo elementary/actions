@@ -10,6 +10,13 @@ inputs:
   regenerate_po:
     description: 'Also regenerate the .po files'
     required: false
+  appstream_file:
+    description: 'The path to the AppStream XML file to be updated with translation completion percentages if specified'
+    required: false
+  native_language:
+    description: 'The native language to be specified as 100% complete in the AppStream file if specified'
+    required: false
+    default: 'en'
 runs:
   using: 'docker'
   image: 'Dockerfile'
