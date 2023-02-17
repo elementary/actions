@@ -54,6 +54,7 @@ If you specify the path to your AppStream XML file, this action will add the `<l
 
 ```xml
   <languages>
+    <lang percentage="100">en</lang>
     <lang percentage="78">en_GB</lang>
     <lang percentage="85">ja</lang>
     <lang percentage="80">uk</lang>
