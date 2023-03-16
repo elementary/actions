@@ -1,5 +1,5 @@
 ARG ELEMENTARY_CODENAME=unstable
-FROM elementary/docker:${ELEMENTARY_CODENAME}
+FROM ghcr.io/elementary/docker:${ELEMENTARY_CODENAME}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
