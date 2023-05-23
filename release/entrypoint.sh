@@ -10,6 +10,9 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
+# Git repository is owned by another user, mark it as safe
+git config --global --add safe.directory /github/workspace
+
 if [ -z "${RELEASE_CHANNEL}" ]; then
   RELEASE_CHANNEL="focal"
 fi
