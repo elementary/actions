@@ -42,22 +42,30 @@ echo "Git credentials configured."
 PROJECT="$(basename "$GITHUB_REPOSITORY")"
 echo "Project: $PROJECT"
 
-#---------------#
-# Parse Appdata #
-#---------------#
+#---------------------------#
+# Parse Appdata or Metainfo #
+#---------------------------#
 
-# get appdata filename:
-APPDATA="$(basename "$(find data -name "*appdata*")")"
+# get appdata or metainfo filename:
+if find data -name "*appdata*" | grep . ; then
+  METAFILE="$(basename "$(find data -name "*appdata*")")"
+elif find data -name "*metainfo*" | grep . ; then
+  METAFILE="$(basename "$(find data -name "*metainfo*")")"
+else
+  echo "No changelog file to parse."
+  exit 1
+fi
+echo "Changelog file to parse: $METAFILE"
 
 # get the version and release notes from the latest release entry in the appdata
-VERSION="$(xmlstarlet sel -t -v '//release[1]//@version' -n data/"$APPDATA")"
+VERSION="$(xmlstarlet sel -t -v '//release[1]//@version' -n data/"$METAFILE")"
 echo "Version: $VERSION"
 
 # get the last version tag before we create a new one!
 PREVIOUS_VERSION="$(git tag -l | grep -v 'debian' | tail -n1 )"
 
 # get the release notes, remove any empty lines & padded spacing
-RELEASE_NOTE_RAW="$(xmlstarlet sel -t -m '//release[1]/description/*' -n -c '.' -n data/"$APPDATA" | awk 'NF' | awk '{$1=$1}1')"
+RELEASE_NOTE_RAW="$(xmlstarlet sel -t -m '//release[1]/description/*' -n -c '.' -n data/"$METAFILE" | awk 'NF' | awk '{$1=$1}1')"
 # replace quotes with commented quotes to prevent breakage in github release note string
 RELEASE_NOTES_SANITIZED="${RELEASE_NOTE_RAW//\"/\\\"}"
 echo "Release Note Content:"
