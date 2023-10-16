@@ -1,0 +1,20 @@
+name: 'Gettext Auto-update'
+description: 'Push the new gettext template and translations when required'
+inputs:
+  manifest-path:
+    description: 'The path of the manifest'
+    required: true
+  repository-name:
+    description: 'The repository name'
+    required: false
+  repository-url:
+    description: 'The repository url'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - run: INPUT_MANIFEST_PATH=${{ inputs.manifest-path }} INPUT_REPOSITORY_NAME=${{ inputs.repository-name }} INPUT_REPOSITORY_URL=${{ inputs.repository-url }} $GITHUB_ACTION_PATH/entrypoint.sh
+      shell: bash
+branding:
+  icon: 'message-circle'
+  color: 'green'
