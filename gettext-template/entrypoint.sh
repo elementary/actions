@@ -9,7 +9,7 @@ if [ -n "$GIT_USER_TOKEN" ]; then
 fi
 
 if [ -z "${GITHUB_TOKEN}" ]; then
-  echo "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
+  echo -e "\033[0;31mERROR: The GITHUB_TOKEN environment variable is not defined.\033[0m"  && exit 1
 fi
 
 # Git repository is owned by another user, mark it as safe
@@ -71,7 +71,7 @@ git checkout -
 git reset --hard HEAD
 
 if ! git checkout $TRANSLATION_BRANCH; then
-  echo "\033[0;31mERROR: Unable to checkout the '$TRANSLATION_BRANCH' branch. Does it exist?\033[0m" && exit 1
+  echo -e "\033[0;31mERROR: Unable to checkout the '$TRANSLATION_BRANCH' branch. Does it exist?\033[0m" && exit 1
 fi
 
 # update the translation template and push changes if required
