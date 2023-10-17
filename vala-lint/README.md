@@ -26,7 +26,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/vala-lint@master
+    - uses: elementary/actions/vala-lint@main
 ```
 
 ## Full Example
@@ -39,7 +39,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/vala-lint@master
+    - uses: elementary/actions/vala-lint@main
       with:
         dir: src/
         conf: .vala-lint.conf

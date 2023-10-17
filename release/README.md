@@ -60,7 +60,7 @@ env:
 name: Release
 on:
   pull_request:
-    branches: master
+    branches: [ $default-branch ]
     types: closed
 jobs:
   release:
@@ -68,7 +68,7 @@ jobs:
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/release@master
+    - uses: elementary/actions/release@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -79,7 +79,7 @@ jobs:
 name: Release
 on:
   pull_request:
-    branches: master
+    branches: [ $default-branch ]
     types: closed
 jobs:
   release:
@@ -87,7 +87,7 @@ jobs:
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/release@master
+    - uses: elementary/actions/release@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:

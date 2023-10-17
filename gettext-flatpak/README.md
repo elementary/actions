@@ -57,7 +57,7 @@ jobs:
     - name: Configure Git
       run: |
         git config --global --add safe.directory "$GITHUB_WORKSPACE"
-    - uses: elementary/actions/gettext-flatpak@master
+    - uses: elementary/actions/gettext-flatpak@main
       with:
         manifest-path: 'io.elementary.code.yml'
 ```
@@ -87,7 +87,7 @@ jobs:
     - name: Configure Git
       run: |
         git config --global --add safe.directory "$GITHUB_WORKSPACE"
-    - uses: elementary/actions/gettext-flatpak@master
+    - uses: elementary/actions/gettext-flatpak@main
       with:
         manifest-path: 'io.elementary.code.yml'
         repository-url: 'https://flatpak.elementary.io/repo.flatpakrepo'

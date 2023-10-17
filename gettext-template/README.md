@@ -32,7 +32,7 @@ env:
 
 ### Specifying a translation branch name
 
-By default, this action will use a branch named 'master' to to push the changes. The branch name can be set via the `translation_branch` input. Example:
+By default, this action will use the default configured branch to to push the changes. The branch name can be forced via the `translation_branch` input. Example:
 
 ```yaml
 with:
@@ -56,13 +56,13 @@ with:
 name: Gettext updates
 on:
   push:
-    branches: master
+    branches: [ $default-branch ]
 jobs:
   gettext_template:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/gettext-template@master
+    - uses: elementary/actions/gettext-template@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -73,13 +73,13 @@ jobs:
 name: Gettext updates
 on:
   push:
-    branches: master
+    branches: [ $default-branch ]
 jobs:
   gettext_template:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: elementary/actions/gettext-template@master
+    - uses: elementary/actions/gettext-template@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
