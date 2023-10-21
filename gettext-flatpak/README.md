@@ -44,8 +44,6 @@ jobs:
       image: ghcr.io/elementary/flatpak-platform/runtime:7.2-x86_64
       options: --privileged
     steps:
-
-    steps:
     - name: Install git, python3-git and jq
       run: |
         apt-get update
