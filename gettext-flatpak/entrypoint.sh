@@ -47,8 +47,7 @@ flatpak-builder build "$MANIFEST_PATH" --repo=repo --disable-rofiles-fuse --forc
 #---------------------------------#
 
 TRANSLATION_FILES=$(git ls-files | grep \.pot$)
-# echo with quotation marks for multiple translation templates
-GETTEXT_TARGETS=$(echo "$TRANSLATION_FILES" | sed 's/.*\///' | sed 's/.pot/-pot/')
+GETTEXT_TARGETS=$(echo $TRANSLATION_FILES | sed 's/\S*\///g' | sed 's/.pot/-pot/g')
 
 echo "ninja $GETTEXT_TARGETS" | flatpak-builder build "$MANIFEST_PATH" --repo=repo --disable-rofiles-fuse --force-clean --build-shell="$MODULE_NAME" --state-dir="$TMPDIR"
 for TRANSLATION_FILE in $TRANSLATION_FILES; do
