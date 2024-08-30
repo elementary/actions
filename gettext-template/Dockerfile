@@ -1,4 +1,4 @@
-ARG ELEMENTARY_CODENAME=unstable
+ARG ELEMENTARY_CODENAME=development-target
 FROM ghcr.io/elementary/docker:${ELEMENTARY_CODENAME}
 
 ENV DEBIAN_FRONTEND=noninteractive

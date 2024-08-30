@@ -41,10 +41,8 @@ jobs:
   gettext_flatpak:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/elementary/flatpak-platform/runtime:7.2-x86_64
+      image: ghcr.io/elementary/flatpak-platform/runtime:8-x86_64
       options: --privileged
-    steps:
-
     steps:
     - name: Install git, python3-git and jq
       run: |
@@ -73,7 +71,7 @@ jobs:
   gettext_flatpak:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/elementary/flatpak-platform/runtime:7.2-x86_64
+      image: ghcr.io/elementary/flatpak-platform/runtime:8-x86_64
       options: --privileged
     steps:
     - name: Install git, python3-git and jq
