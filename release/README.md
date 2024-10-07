@@ -7,7 +7,7 @@ For more information on the overall flow of this ci image, take a look at the [e
 
 This image is intended for use with elementary debian projects. There are a few requirements before getting started:
 
-  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project. Docs: [debian control](https://elementary.io/docs/code/getting-started#debian-control)
+  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project.
   2. The project needs release information in an `appdata.xml` file. Docs: [appdata](https://elementary.io/docs/code/getting-started#appdata)
 
 ### Environment Variables
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/release@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && true == contains(join(github.event.pull_request.labels.*.name), 'Release')
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/release@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
