@@ -6,7 +6,7 @@ This action automates the manual steps needed to regenerate the gettext template
 
 This image is intended for use with elementary debian projects. There are a few requirements before getting started:
 
-  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project. Docs: [debian control](https://elementary.io/docs/code/getting-started#debian-control)
+  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project
   2. The project needs to use the meson build system
 
 ### Environment Variables
@@ -61,7 +61,7 @@ jobs:
   gettext_template:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/gettext-template@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
   gettext_template:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/gettext-template@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
