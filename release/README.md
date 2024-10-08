@@ -8,7 +8,7 @@ For more information on the overall flow of this ci image, take a look at the [e
 This image is intended for use with elementary debian projects. There are a few requirements before getting started:
 
   1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project.
-  2. The project needs release information in an `appdata.xml` file. Docs: [appdata](https://elementary.io/docs/code/getting-started#appdata)
+  2. The project needs release information in an `appdata.xml` file. Docs: [appdata](https://docs.elementary.io/develop/writing-apps/our-first-app/metadata)
 
 ### Environment Variables
 
