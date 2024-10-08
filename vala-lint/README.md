@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/vala-lint@main
 ```
 
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: elementary/actions/vala-lint@main
       with:
         dir: src/
