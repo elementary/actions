@@ -44,10 +44,9 @@ jobs:
       image: ghcr.io/elementary/flatpak-platform/runtime:8-x86_64
       options: --privileged
     steps:
-    - name: Install git, python3-git and jq
+    - name: Install GitPython
       run: |
-        apt-get update
-        apt-get install git jq python3-git -y
+        python3 -m pip install GitPython
     - name: Clone repository
       uses: actions/checkout@v4
       with:
@@ -74,10 +73,9 @@ jobs:
       image: ghcr.io/elementary/flatpak-platform/runtime:8-x86_64
       options: --privileged
     steps:
-    - name: Install git, python3-git and jq
+    - name: Install GitPython
       run: |
-        apt-get update
-        apt-get install git jq python3-git -y
+        python3 -m pip install GitPython
     - name: Clone repository
       uses: actions/checkout@v4
       with:
