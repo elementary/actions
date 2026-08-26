@@ -19,6 +19,7 @@ if [ -z "$GIT_USER_NAME" ]; then
   GIT_USER_NAME="GitHub Action"
 fi
 
+git config --global --add safe.directory /github/workspace
 git config --global user.email "$GIT_USER_EMAIL"
 git config --global user.name "$GIT_USER_NAME"
 echo "Git credentials configured."
