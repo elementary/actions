@@ -5,11 +5,21 @@ inputs:
     description: 'the name of the stable release branch'
     required: false
     default: 'stable'
+  packaging_branch:
+    description: 'the name of the Debian packaging branch'
+    required: false
+    default: 'deb-packaging'
+  base_branch:
+    description: 'the name of the base branch or use the default branch if unspecified'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.release_branch }}
+    - ${{ inputs.packaging_branch }}
+    - ${{ inputs.base_branch }}
 branding:
   icon: 'git-pull-request'
   color: 'green'

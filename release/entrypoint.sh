@@ -22,6 +22,20 @@ if [ -z "$1" ]; then
 else
   RELEASE_BRANCH="$1"
 fi
+
+if [ -z "$2" ]; then
+  PACKAGING_BRANCH="deb-packaging"
+else
+  PACKAGING_BRANCH="$2"
+fi
+
+if [ -z "$3" ]; then
+  # get default branch, see: https://davidwalsh.name/get-default-branch-name
+  BASE_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
+else
+  BASE_BRANCH="$3"
+fi
+
 # default email and username to github actions user
 if [ -z "$GIT_USER_EMAIL" ]; then
   GIT_USER_EMAIL="action@github.com"
@@ -110,8 +124,8 @@ echo "Debian Changelog Content:"
 echo -e "$FILTERED_COMMITS\n"
 
 # move to the debian packaging branch
-if ! git checkout deb-packaging; then
-  echo "\033[0;31mERROR: Unable to checkout the 'deb-packaging' branch. Does it exist?\033[0m" && exit 1
+if ! git checkout "$PACKAGING_BRANCH"; then
+  echo "\033[0;31mERROR: Unable to checkout the '$PACKAGING_BRANCH' branch. Does it exist?\033[0m" && exit 1
 fi
 
 if [ -z "$FILTERED_COMMITS" ]; then
@@ -143,18 +157,15 @@ fi
 if ! (git push && git push origin "$TAG"); then
   echo "\033[0;31mERROR: Unable to push changelog information!\033[0m" && exit 1
 fi
-echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
+echo -e "\n\033[1;32mChangelogs have been pushed to $PACKAGING_BRANCH!\033[0m\n"
 
 #------------------#
 # Deploy to stable #
 #------------------#
 
-# point head back to what it was before checking out deb-packaging
+# point head back to what it was before checking out the packaging branch
 git checkout -
 git reset --hard HEAD
-
-# get default branch, see: https://davidwalsh.name/get-default-branch-name
-DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
 
 # checkout or create stable branch
 if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
@@ -163,9 +174,9 @@ else
   git checkout "$RELEASE_BRANCH"
 fi
 
-# rebase off of default branch & push to remote
-if ! git rebase origin/"$DEFAULT_BRANCH"; then
-  echo "\033[0;31mERROR: Unable to merge default branch $DEFAULT_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
+# rebase off of base branch & push to remote
+if ! git rebase origin/"$BASE_BRANCH"; then
+  echo "\033[0;31mERROR: Unable to merge base branch $BASE_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
 fi
 if ! git push origin "$RELEASE_BRANCH" --force-with-lease; then
   echo "\033[0;31mERROR: Unable to push changes to the $RELEASE_BRANCH branch!\033[0m" && exit 1
