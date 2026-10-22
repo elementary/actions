@@ -39,6 +39,15 @@ with:
   packaging_branch: 'deb-packaging-juno'
 ```
 
+### Specifying a base branch name
+
+By default, this action will use the default branch as a base branch of the release branch. The branch name can be set via the `base_branch` input. Example:
+
+```yaml
+with:
+  base_branch: '6'
+```
+
 ### Specifying a label
 
 By default, the examples check for a label called `Release` on the related pull request. This can be set in the workflow action by changing the following:
@@ -102,4 +111,5 @@ jobs:
       with:
         release_branch: 'juno'
         packaging_branch: 'deb-packaging-juno'
+        base_branch: '8'
 ```

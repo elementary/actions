@@ -29,6 +29,13 @@ else
   PACKAGING_BRANCH="$2"
 fi
 
+if [ -z "$3" ]; then
+  # get default branch, see: https://davidwalsh.name/get-default-branch-name
+  BASE_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
+else
+  BASE_BRANCH="$3"
+fi
+
 # default email and username to github actions user
 if [ -z "$GIT_USER_EMAIL" ]; then
   GIT_USER_EMAIL="action@github.com"
@@ -160,9 +167,6 @@ echo -e "\n\033[1;32mChangelogs have been pushed to $PACKAGING_BRANCH!\033[0m\n"
 git checkout -
 git reset --hard HEAD
 
-# get default branch, see: https://davidwalsh.name/get-default-branch-name
-DEFAULT_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
-
 # checkout or create stable branch
 if ! git show-ref --verify --quiet refs/heads/"$RELEASE_BRANCH"; then
   git checkout -b "$RELEASE_BRANCH"
@@ -170,9 +174,9 @@ else
   git checkout "$RELEASE_BRANCH"
 fi
 
-# rebase off of default branch & push to remote
-if ! git rebase origin/"$DEFAULT_BRANCH"; then
-  echo "\033[0;31mERROR: Unable to merge default branch $DEFAULT_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
+# rebase off of base branch & push to remote
+if ! git rebase origin/"$BASE_BRANCH"; then
+  echo "\033[0;31mERROR: Unable to merge base branch $BASE_BRANCH into $RELEASE_BRANCH!\033[0m" && exit 1
 fi
 if ! git push origin "$RELEASE_BRANCH" --force-with-lease; then
   echo "\033[0;31mERROR: Unable to push changes to the $RELEASE_BRANCH branch!\033[0m" && exit 1
