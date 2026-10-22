@@ -7,7 +7,7 @@ For more information on the overall flow of this ci image, take a look at the [e
 
 This image is intended for use with elementary debian projects. There are a few requirements before getting started:
 
-  1. The project needs to have a deb-packaging branch with the necessary debian packaging for the project.
+  1. The project needs to have a branch with the necessary debian packaging for the project, typically named as `deb-packaging`.
   2. The project needs release information in an `appdata.xml` file. Docs: [appdata](https://docs.elementary.io/develop/writing-apps/our-first-app/metadata)
 
 ### Environment Variables
@@ -28,6 +28,15 @@ By default, this action will create and update a branch named 'stable' whenever 
 ```yaml
 with:
   release_branch: 'juno'
+```
+
+### Specifying a packaging branch name
+
+By default, this action will update the `changelog` file in a branch named 'deb-packaging' whenever a release is pushed. The branch name can be set via the `packaging_branch` input. Example:
+
+```yaml
+with:
+  packaging_branch: 'deb-packaging-juno'
 ```
 
 ### Specifying a label
@@ -92,4 +101,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_branch: 'juno'
+        packaging_branch: 'deb-packaging-juno'
 ```

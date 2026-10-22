@@ -22,6 +22,13 @@ if [ -z "$1" ]; then
 else
   RELEASE_BRANCH="$1"
 fi
+
+if [ -z "$2" ]; then
+  PACKAGING_BRANCH="deb-packaging"
+else
+  PACKAGING_BRANCH="$2"
+fi
+
 # default email and username to github actions user
 if [ -z "$GIT_USER_EMAIL" ]; then
   GIT_USER_EMAIL="action@github.com"
@@ -110,8 +117,8 @@ echo "Debian Changelog Content:"
 echo -e "$FILTERED_COMMITS\n"
 
 # move to the debian packaging branch
-if ! git checkout deb-packaging; then
-  echo "\033[0;31mERROR: Unable to checkout the 'deb-packaging' branch. Does it exist?\033[0m" && exit 1
+if ! git checkout "$PACKAGING_BRANCH"; then
+  echo "\033[0;31mERROR: Unable to checkout the '$PACKAGING_BRANCH' branch. Does it exist?\033[0m" && exit 1
 fi
 
 if [ -z "$FILTERED_COMMITS" ]; then
@@ -143,13 +150,13 @@ fi
 if ! (git push && git push origin "$TAG"); then
   echo "\033[0;31mERROR: Unable to push changelog information!\033[0m" && exit 1
 fi
-echo -e "\n\033[1;32mChangelogs have been pushed to deb-packaging!\033[0m\n"
+echo -e "\n\033[1;32mChangelogs have been pushed to $PACKAGING_BRANCH!\033[0m\n"
 
 #------------------#
 # Deploy to stable #
 #------------------#
 
-# point head back to what it was before checking out deb-packaging
+# point head back to what it was before checking out the packaging branch
 git checkout -
 git reset --hard HEAD
 
