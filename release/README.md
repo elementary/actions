@@ -45,7 +45,7 @@ By default, this action will use the current branch where the workflow action ex
 
 ```yaml
 with:
-  base_branch: '6'
+  base_branch: 'develop'
 ```
 
 ### Specifying a label
@@ -111,5 +111,5 @@ jobs:
       with:
         release_branch: 'juno'
         packaging_branch: 'deb-packaging-juno'
-        base_branch: '8'
+        base_branch: '5.x'
 ```
