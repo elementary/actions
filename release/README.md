@@ -41,7 +41,7 @@ with:
 
 ### Specifying a base branch name
 
-By default, this action will use the default branch as a base branch of the release branch. The branch name can be set via the `base_branch` input. Example:
+By default, this action will use the current branch where the workflow action exists as a base branch of the release branch. The branch name can be set via the `base_branch` input. Example:
 
 ```yaml
 with:

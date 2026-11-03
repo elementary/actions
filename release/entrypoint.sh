@@ -30,8 +30,7 @@ else
 fi
 
 if [ -z "$3" ]; then
-  # get default branch, see: https://davidwalsh.name/get-default-branch-name
-  BASE_BRANCH="$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)"
+  BASE_BRANCH="$(git branch --show-current)"
 else
   BASE_BRANCH="$3"
 fi
