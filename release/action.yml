@@ -10,7 +10,7 @@ inputs:
     required: false
     default: 'deb-packaging'
   base_branch:
-    description: 'the name of the base branch or use the default branch if unspecified'
+    description: 'the name of the base branch or use the current branch where the workflow action exists if unspecified'
     required: false
     default: ''
 runs:
